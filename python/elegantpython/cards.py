@@ -1,5 +1,6 @@
 import collections
-from random import choice
+# from random import choice
+import random
 
 Card = collections.namedtuple('Card', ['rank', 'suit'])
 
@@ -16,9 +17,20 @@ class FrenchDeck:
 
     def __getitem__(self, position):
         return self._cards[position]
-        
+
+    def shuffle(self):
+    	random.shuffle(self._cards)
+
+    def print_deck(self):
+    	for card in self._cards:
+    		print(card.rank, card.suit)
+
+
 if __name__ == '__main__':
 	theDeck = FrenchDeck()
-	for card in theDeck:
-		print(card.rank, card.suit)
+	print('unshuffled')
+	theDeck.print_deck()
 #	print(choice(theDeck).rank)
+	theDeck.shuffle()
+	print('shuffled')
+	theDeck.print_deck()
