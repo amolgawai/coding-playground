@@ -23,6 +23,8 @@ flake8 = "^3.7.9"
 pydataset = "^0.2.0"
 jupyter = "^1.0.0"
 notebook = "^6.0.3"
+jupyter-kite = "^2.0.2"
+jupyterlab-git = "^0.23.3"
 
 [build-system]
 requires = ["poetry>=0.12"]
