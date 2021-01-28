@@ -1,11 +1,12 @@
 """Implementations of Progression"""
 from progression import Progression
+import itertools
 
 
 class ArithmeticProgression(Progression):
     """Iterator producign Arithmetic Progression"""
 
-    def __init__(self, increment=0, start=1):
+    def __init__(self, increment=1, start=0):
         "Initialise with a start and increment value"
 
         super().__init__(start)
@@ -50,7 +51,4 @@ class FibonacciProgression(Progression):
 if __name__ == "__main__":
     progs = [ArithmeticProgression(), GeometricProgression(), FibonacciProgression()]
     for a_prog in progs:
-        for _ in range(10):
-            print(next(a_prog), end=", ")
-
-        print("")
+        print(*(ele for ele in itertools.islice(a_prog, 10)))
