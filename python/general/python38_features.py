@@ -1,5 +1,5 @@
-"""
-Overview of features introduced in python 3.8
+""" Overview of features introduced in python 3.8
+
 ref - https://realpython.com/lessons/cool-new-features-python-38-overview/
 """
 
@@ -16,16 +16,18 @@ while (current := input("Write something, type quit to quit - ")) != "quit":
     inputs.append(current)
 print(f"you said {inputs}")
 
+
 # positional only arguments
-def greet(
-    name, /, greeting="Hello"
-):  # the '/' separates positional only and named args
+def greet(name, /, greeting="Hello"):  # the '/' separates positional only and
+    # named args
     print(f"{greeting} {name}")
 
 
 greet("Jon")
 greet("Jon", greeting="Hi")
 # greet(name = "Jon") - does not work
+
+
 # keyword only arguments are available in python 3 which can be separated by '*'
 def headline(text, /, border="~", *, width=50):
     """Example of regular positional-only and keyword-only args
@@ -52,6 +54,7 @@ print(headline("Real Python", border=":"))
 print(headline("Python", "@", width=38))
 # headline("Python", "@", 38) - This doesn't work
 
+
 # More precise types
 # type checking as introduced in 3.5
 def double_it(number: float) -> float:
@@ -61,6 +64,8 @@ def double_it(number: float) -> float:
 # check with mypy on cli
 double_it(10.5)  # passes mypy
 double_it("type check failed")  # mypy error
+
+
 # 3.8 introduced 'Literal' type which restricts possible values of an argument
 # or return
 def draw_line(direction: Literal["horizontal", "vertical"]) -> None:

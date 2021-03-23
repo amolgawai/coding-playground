@@ -1,0 +1,10 @@
+#+TITLE: Itertools and more-itertools
+
+* Trial
+
+#+BEGIN_SRC python :results output
+print("Hello org")
+#+END_SRC
+
+#+RESULTS:
+: Hello org

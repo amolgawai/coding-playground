@@ -12,7 +12,11 @@ from progression_impls import (
 # @pytest.fixture
 def get_progrssions():
     """Gets a list of concrete progressions"""
-    return [ArithmeticProgression(), GeometricProgression(), FibonacciProgression()]
+    return [
+        ArithmeticProgression(),
+        GeometricProgression(),
+        FibonacciProgression(),
+    ]
 
 
 def test_abstract_exception():
