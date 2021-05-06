@@ -20,15 +20,20 @@ impl KVStore {
         KVStore { map: db_map }
     }
 
-    pub fn add(self: &mut Self, key: &str, value: &str) {
+    pub fn add(&mut self, key: &str, value: &str) {
         self.map.insert(key.to_owned(), value.to_owned());
+        self.map.insert(key.to_uppercase(), value.to_owned());
     }
 
-    pub fn to_str(self: &Self) -> String {
+    pub fn to_str(&self) -> String {
         let mut db_str = String::new();
         for (key, value) in self.map.iter() {
-            let db_line = format!("{}\t{}\n", key, value);
-            db_str.push_str(&db_line);
+            // let db_line = format!("{}\t{}\n", key, value);
+            // db_str.push_str(&db_line);
+            db_str.push_str(key);
+            db_str.push('\t');
+            db_str.push_str(value);
+            db_str.push('\n');
         }
 
         return db_str;

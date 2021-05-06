@@ -1,5 +1,6 @@
 mod kvstore;
 use std::{env, fs, path::Path};
+
 fn main() {
     let mut args = env::args().skip(1);
     let key = args.next().expect("Please provide a key");
@@ -12,9 +13,8 @@ fn main() {
         db_str = fs::read_to_string("kv.db").expect("no database found");
     }
 
-    // let db = Database::new();
-    let mut db = kvstore::KVStore::from_str(&db_str);
-    db.add(&key[..], &value[..]);
+    let mut kv_store = kvstore::KVStore::from_str(&db_str);
+    kv_store.add(&key, &value);
 
-    fs::write(db_path.to_str().unwrap(), db.to_str()).expect("Error writing to file");
+    fs::write(db_path.to_str().unwrap(), kv_store.to_str()).expect("Error writing to file");
 }
