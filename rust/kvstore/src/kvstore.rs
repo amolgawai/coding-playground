@@ -1,11 +1,11 @@
-use std::{collections::HashMap, fs};
-pub struct Database {
+use std::collections::HashMap;
+pub struct KVStore {
     map: HashMap<String, String>,
 }
 
-impl Database {
+impl KVStore {
     // pub fn new(db_str:&String) -> Result<Database, std::io::Error> {
-    pub fn new(db_str: &String) -> Database {
+    pub fn from_str(db_str: &str) -> KVStore {
         // let contents = fs::read_to_string("kv.db")?;
         let mut db_map = HashMap::new();
         // for a_line in contents.lines() {
@@ -17,24 +17,20 @@ impl Database {
             db_map.insert(key.to_owned(), value.to_owned());
         }
         // Ok(Database { map: db_map })
-        Database { map: db_map }
-    }
-
-    pub fn map(self: &Self) -> HashMap<String, String> {
-        self.map.clone()
+        KVStore { map: db_map }
     }
 
     pub fn add(self: &mut Self, key: &str, value: &str) {
         self.map.insert(key.to_owned(), value.to_owned());
     }
 
-    pub fn write_to_file(self: Self, f_path: &str) -> std::io::Result<()> {
+    pub fn to_str(self: &Self) -> String {
         let mut db_str = String::new();
         for (key, value) in self.map.iter() {
             let db_line = format!("{}\t{}\n", key, value);
             db_str.push_str(&db_line);
         }
 
-        fs::write(f_path, db_str)
+        return db_str;
     }
 }
