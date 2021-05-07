@@ -10,9 +10,10 @@ impl KVStore {
         let mut db_map = HashMap::new();
         // for a_line in contents.lines() {
         for a_line in db_str.lines() {
-            let mut chunk = a_line.splitn(2, "\t");
-            let key = chunk.next().expect("corrupt database");
-            let value = chunk.next().expect("corrupt database");
+            let (key, value) = a_line.split_once('\t').unwrap();
+            // let mut chunk = a_line.splitn(2, "\t");
+            // let key = chunk.next().expect("corrupt database");
+            // let value = chunk.next().expect("corrupt database");
             // db_map.insert(String::from(key), String::from(value));
             db_map.insert(key.to_owned(), value.to_owned());
         }
