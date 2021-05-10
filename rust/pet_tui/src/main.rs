@@ -3,6 +3,7 @@ use crossterm::{
     event::{self, Event as CEvent, KeyCode},
     terminal::{disable_raw_mode, enable_raw_mode},
 };
+use petname;
 use rand::{self, Rng};
 use serde::{Deserialize, Serialize};
 use std::fs;
@@ -21,12 +22,11 @@ use tui::{
     },
     Terminal,
 };
-use petname;
 
 const DB_PATH: &str = "./data/db.json";
 
 #[derive(Serialize, Deserialize, Clone)]
-struct  Pet {
+struct Pet {
     id: usize,
     name: String,
     category: String,
@@ -87,7 +87,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     });
 
-
     // setup an terminal to draw the app
     let stdout = io::stdout();
     let backend = CrosstermBackend::new(stdout);
@@ -114,16 +113,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 MenuItem::Home => rect.render_widget(render_home(), chunks[1]),
                 MenuItem::Pets => {
                     let pets_chunks = Layout::default()
-                    .direction(Direction::Horizontal)
-                    .constraints([Constraint::Percentage(20), Constraint::Percentage(80)].as_ref(),)
-                    .split(chunks[1]);
+                        .direction(Direction::Horizontal)
+                        .constraints(
+                            [Constraint::Percentage(20), Constraint::Percentage(80)].as_ref(),
+                        )
+                        .split(chunks[1]);
                     let (left, right) = render_pets(&pet_list_state);
                     rect.render_stateful_widget(left, pets_chunks[0], &mut pet_list_state);
                     rect.render_widget(right, pets_chunks[1]);
                 }
             }
-
-            })?;
+        })?;
 
         match rx.recv()? {
             Event::Input(event) => match event.code {
@@ -161,66 +161,65 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     }
                 }
                 _ => {}
-            }
+            },
             Event::Tick => {}
         }
     }
     Ok(())
-
 }
 
-fn layout_chunks(size: &tui::layout::Rect ) -> Vec<tui::layout::Rect> {
+fn layout_chunks(size: &tui::layout::Rect) -> Vec<tui::layout::Rect> {
     Layout::default()
-            .direction(Direction::Vertical)
-            .margin(2)
-            .constraints(
-                [
-                    Constraint::Length(3),
-                    Constraint::Min(2),
-                    Constraint::Length(3),
-                    ]
-                    .as_ref(),
-                )
-                .split(*size)
+        .direction(Direction::Vertical)
+        .margin(2)
+        .constraints(
+            [
+                Constraint::Length(3),
+                Constraint::Min(2),
+                Constraint::Length(3),
+            ]
+            .as_ref(),
+        )
+        .split(*size)
 }
 
 fn copyright_para() -> Paragraph<'static> {
     Paragraph::new("pet-CLI 2021 - all rights reserved")
-                .style(Style::default().fg(Color::LightCyan))
-                .alignment(Alignment::Center)
-                .block(
-                    Block::default()
-                    .borders(Borders::ALL)
-                    .style(Style::default().fg(Color::White))
-                    .title("Copyright")
-                    .border_type(BorderType::Plain),
-                )
-
+        .style(Style::default().fg(Color::LightCyan))
+        .alignment(Alignment::Center)
+        .block(
+            Block::default()
+                .borders(Borders::ALL)
+                .style(Style::default().fg(Color::White))
+                .title("Copyright")
+                .border_type(BorderType::Plain),
+        )
 }
 
 fn menu_tabs(active_menu_item: MenuItem) -> Tabs<'static> {
     let menu_titles = vec!["Home", "Pets", "Add", "Delete", "Quit"];
-    let menu = menu_titles.iter()
-    .map(|t| {
-        let (first, rest) = t.split_at(1);
-        Spans::from(vec![
-            Span::styled(
-                first, 
-                Style::default()
-                .fg(Color::Yellow)
-                .add_modifier(Modifier::UNDERLINED),
-            ),
-            Span::styled(rest, Style::default().fg(Color::White)),
-        ])
-    })
-    .collect();
+    let menu = menu_titles
+        .iter()
+        .map(|t| {
+            let (first, rest) = t.split_at(1);
+            Spans::from(vec![
+                Span::styled(
+                    first,
+                    Style::default()
+                        .fg(Color::Yellow)
+                        .add_modifier(Modifier::UNDERLINED),
+                ),
+                Span::styled(rest, Style::default().fg(Color::White)),
+            ])
+        })
+        .collect();
 
     Tabs::new(menu)
-    .select(active_menu_item.into())
-    .block(Block::default().title("Menu").borders(Borders::ALL))
-    .style(Style::default().fg(Color::White))
-    .highlight_style(Style::default().fg(Color::Yellow))
-    .divider(Span::raw("|"))
+        .select(active_menu_item.into())
+        .block(Block::default().title("Menu").borders(Borders::ALL))
+        .style(Style::default().fg(Color::White))
+        .highlight_style(Style::default().fg(Color::Yellow))
+        .divider(Span::raw("|"))
 }
 
 fn render_home<'a>() -> Paragraph<'a> {
@@ -351,10 +350,8 @@ fn add_random_pet_to_db() -> Result<Vec<Pet>, Error> {
         0 => "cats",
         _ => "dogs",
     };
-    let random_name = petname::Petnames::default() .generate_one(10, "-");
-    let pet_name = random_name .split('-')
-                            .next_back()
-                            .unwrap_or_default();
+    let random_name = petname::Petnames::default().generate_one(10, "-");
+    let pet_name = random_name.split('-').next_back().unwrap_or_default();
     let random_pet = Pet {
         id: rng.gen_range(0..10000000),
         // name: rng.sample_iter(Alphanumeric).take(10).collect(),
