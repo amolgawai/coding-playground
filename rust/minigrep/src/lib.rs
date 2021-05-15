@@ -22,13 +22,22 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &str> {
-        if args.len() < 3 {
-            return Err("not enough arguments");
-        }
+	pub fn new<'a, I>(mut args: I) -> Result<Config, &'a str>
+	where I: Iterator<Item = String>,
+	{
+		let query = match args.next() {
+			Some(arg) => arg,
+			None => return Err("Missing argument - query string"),
+		};
 
-        Ok(Config{ query: args[1].clone(), filename: args[2].clone()})
-    }
+		let filename = match args.next() {
+			Some(arg) => arg,
+			None => return Err("Missing argument - filename"),
+		};
+
+		Ok(Config{query, filename})
+
+	}
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
@@ -41,13 +50,5 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut results = Vec::new();
-
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
-        }
-    }
-
-    results
+    contents.lines().filter(|line| line.contains(query)).collect::<_>()
 }
