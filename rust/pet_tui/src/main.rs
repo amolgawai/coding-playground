@@ -392,7 +392,13 @@ fn remove_pet_at_index(pet_list_state: &mut ListState) -> Result<(), Error> {
         let mut parsed: Vec<Pet> = serde_json::from_str(&db_content)?;
         parsed.remove(selected);
         fs::write(DB_PATH, &serde_json::to_vec(&parsed)?)?;
-        pet_list_state.select(Some(selected - 1));
+        if parsed.is_empty() {
+            pet_list_state.select(None);
+        } else {
+            if selected != 0 {
+                pet_list_state.select(Some(selected - 1));
+            }
+        }
     }
     Ok(())
 }
