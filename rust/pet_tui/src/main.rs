@@ -1,12 +1,9 @@
 use chrono::prelude::*;
-use crossterm::{
-    event::{self, Event as CEvent, KeyCode},
-    terminal::{disable_raw_mode, enable_raw_mode},
-};
+use crossterm::{event::{self, Event as CEvent, KeyCode, KeyEvent}, terminal::{disable_raw_mode, enable_raw_mode}};
 use petname;
 use rand::{self, Rng};
 use serde::{Deserialize, Serialize};
-use std::fs;
+use std::{fs, io::Stdout};
 use std::io;
 use std::sync::mpsc;
 use std::thread;
@@ -62,42 +59,59 @@ impl From<MenuItem> for usize {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    run_app()
+}
+
+fn run_app() -> Result<(), Box<dyn std::error::Error>> {
+
     enable_raw_mode().expect("can run in raw mode");
 
     let (tx, rx) = mpsc::channel();
+    thread::spawn(move || events_loop(tx));
+
+    let terminal = setup_terminal()?;
+    rendering_loop(rx, terminal)
+}
+
+fn events_loop(tx: mpsc::Sender<Event<KeyEvent>>) {
+
     let tick_rate = Duration::from_millis(200);
-    thread::spawn(move || {
-        let mut last_tick = Instant::now();
-        loop {
-            let timeout = tick_rate
-                .checked_sub(last_tick.elapsed())
-                .unwrap_or_else(|| Duration::from_secs(0));
+    let mut last_tick = Instant::now();
+    loop {
+        let timeout = tick_rate
+            .checked_sub(last_tick.elapsed())
+            .unwrap_or_else(|| Duration::from_secs(0));
 
-            if event::poll(timeout).expect("poll works") {
-                if let CEvent::Key(key) = event::read().expect("can read events") {
-                    tx.send(Event::Input(key)).expect("can send events");
-                }
-            }
-
-            if last_tick.elapsed() >= tick_rate {
-                if let Ok(_) = tx.send(Event::Tick) {
-                    last_tick = Instant::now();
-                }
+        if event::poll(timeout).expect("poll works") {
+            if let CEvent::Key(key) = event::read().expect("can read events") {
+                tx.send(Event::Input(key)).expect("can send events");
             }
         }
-    });
 
+        if last_tick.elapsed() >= tick_rate {
+            if let Ok(_) = tx.send(Event::Tick) {
+                last_tick = Instant::now();
+            }
+        }
+    }
+}
+
+fn setup_terminal() -> Result<Terminal<CrosstermBackend<Stdout>>, Box<dyn std::error::Error>> {
     // setup an terminal to draw the app
     let stdout = io::stdout();
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
     terminal.clear()?;
+    Ok(terminal)
+}
 
+fn rendering_loop(rx: mpsc::Receiver<Event<KeyEvent>>, mut terminal: Terminal<CrosstermBackend<Stdout>>) -> Result<(), Box<dyn std::error::Error>> {
+
+    // setup rendering loop
     let mut active_menu_item = MenuItem::Home;
     let mut pet_list_state = ListState::default();
     pet_list_state.select(Some(0));
 
-    // setup rendering loop
     loop {
         terminal.draw(|rect| {
             let size = rect.size();
@@ -165,6 +179,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             Event::Tick => {}
         }
     }
+
     Ok(())
 }
 
