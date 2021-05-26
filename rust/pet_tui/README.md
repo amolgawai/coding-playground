@@ -15,7 +15,7 @@ The reference code is quite a bit of spaghetti and although I factored it a bit,
 - [x] Use latest rand module
 - [x] Use a real pet name generator (petnames) over gibberish produced by rand
 - [x] Refactor main into smaller functions
-- [ ] Create db directory if doesn't exist
+- [x] Create db directory if doesn't exist
 - [x] Handle deleting all entries
 - [x] Handle crash on empty pet list
 
