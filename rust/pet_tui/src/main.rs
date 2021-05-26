@@ -110,7 +110,8 @@ fn rendering_loop(rx: mpsc::Receiver<Event<KeyEvent>>, mut terminal: Terminal<Cr
     // setup rendering loop
     let mut active_menu_item = MenuItem::Home;
     let mut pet_list_state = ListState::default();
-    pet_list_state.select(Some(0));
+    // pet_list_state.select(Some(0));
+    pet_list_state.select(None);
 
     loop {
         terminal.draw(|rect| {
@@ -124,22 +125,25 @@ fn rendering_loop(rx: mpsc::Receiver<Event<KeyEvent>>, mut terminal: Terminal<Cr
             rect.render_widget(tabs, chunks[0]);
 
             match active_menu_item {
-                MenuItem::Home => rect.render_widget(render_home("Home"), chunks[1]),
+                MenuItem::Home => rect.render_widget(render_info_para("Home"), chunks[1]),
                 MenuItem::Pets => {
-                    let pets_chunks = Layout::default()
-                        .direction(Direction::Horizontal)
-                        .constraints(
-                            [Constraint::Percentage(20), Constraint::Percentage(80)].as_ref(),
-                        )
-                        .split(chunks[1]);
-
                     let pet_list = read_db().expect("can fetch pet list");
                     if !pet_list.is_empty() {
+                        if pet_list_state.selected() == None {
+                            pet_list_state.select(Some(0));
+                        }
+                        let pets_chunks = Layout::default()
+                            .direction(Direction::Horizontal)
+                            .constraints(
+                                [Constraint::Percentage(20), Constraint::Percentage(80)].as_ref(),
+                            )
+                            .split(chunks[1]);
+
                         let (left, right) = render_pets(&pet_list_state, &pet_list);
                         rect.render_stateful_widget(left, pets_chunks[0], &mut pet_list_state);
                         rect.render_widget(right, pets_chunks[1]);
                     } else {
-                        rect.render_widget(render_home("Pets"), chunks[1])
+                        rect.render_widget(render_info_para("Pets"), chunks[1])
                     }
                 }
             }
@@ -243,7 +247,7 @@ fn menu_tabs(active_menu_item: MenuItem) -> Tabs<'static> {
         .divider(Span::raw("|"))
 }
 
-fn render_home<'a>(title: &'a str) -> Paragraph<'a> {
+fn render_info_para<'a>(title: &'a str) -> Paragraph<'a> {
     let home = Paragraph::new(vec![
         Spans::from(vec![Span::raw("")]),
         Spans::from(vec![Span::raw("Welcome")]),
