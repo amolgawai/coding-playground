@@ -124,7 +124,7 @@ fn rendering_loop(rx: mpsc::Receiver<Event<KeyEvent>>, mut terminal: Terminal<Cr
             rect.render_widget(tabs, chunks[0]);
 
             match active_menu_item {
-                MenuItem::Home => rect.render_widget(render_home(), chunks[1]),
+                MenuItem::Home => rect.render_widget(render_home("Home"), chunks[1]),
                 MenuItem::Pets => {
                     let pets_chunks = Layout::default()
                         .direction(Direction::Horizontal)
@@ -132,9 +132,15 @@ fn rendering_loop(rx: mpsc::Receiver<Event<KeyEvent>>, mut terminal: Terminal<Cr
                             [Constraint::Percentage(20), Constraint::Percentage(80)].as_ref(),
                         )
                         .split(chunks[1]);
-                    let (left, right) = render_pets(&pet_list_state);
-                    rect.render_stateful_widget(left, pets_chunks[0], &mut pet_list_state);
-                    rect.render_widget(right, pets_chunks[1]);
+
+                    let pet_list = read_db().expect("can fetch pet list");
+                    if !pet_list.is_empty() {
+                        let (left, right) = render_pets(&pet_list_state, &pet_list);
+                        rect.render_stateful_widget(left, pets_chunks[0], &mut pet_list_state);
+                        rect.render_widget(right, pets_chunks[1]);
+                    } else {
+                        rect.render_widget(render_home("Pets"), chunks[1])
+                    }
                 }
             }
         })?;
@@ -237,7 +243,7 @@ fn menu_tabs(active_menu_item: MenuItem) -> Tabs<'static> {
         .divider(Span::raw("|"))
 }
 
-fn render_home<'a>() -> Paragraph<'a> {
+fn render_home<'a>(title: &'a str) -> Paragraph<'a> {
     let home = Paragraph::new(vec![
         Spans::from(vec![Span::raw("")]),
         Spans::from(vec![Span::raw("Welcome")]),
@@ -256,7 +262,7 @@ fn render_home<'a>() -> Paragraph<'a> {
         Block::default()
             .borders(Borders::ALL)
             .style(Style::default().fg(Color::White))
-            .title("Home")
+            .title(title)
             .border_type(BorderType::Plain),
     );
     home
@@ -273,14 +279,13 @@ fn read_db() -> Result<Vec<Pet>, Error> {
     Ok(parsed)
 }
 
-fn render_pets<'a>(pet_list_state: &ListState) -> (List<'a>, Table<'a>) {
+fn render_pets<'a>(pet_list_state: &ListState, pet_list: &Vec<Pet>) -> (List<'a>, Table<'a>) {
     let pets = Block::default()
         .borders(Borders::ALL)
         .style(Style::default().fg(Color::White))
         .title("Pets")
         .border_type(BorderType::Plain);
 
-    let pet_list = read_db().expect("can fetch pet list");
     let items: Vec<_> = pet_list
         .iter()
         .map(|pet| {
