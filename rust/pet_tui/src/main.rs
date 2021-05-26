@@ -3,8 +3,8 @@ use crossterm::{event::{self, Event as CEvent, KeyCode, KeyEvent}, terminal::{di
 use petname;
 use rand::{self, Rng};
 use serde::{Deserialize, Serialize};
-use std::{fs, io::Stdout};
-use std::io;
+use std::{fs, path::Path};
+use std::io::{self, Stdout};
 use std::sync::mpsc;
 use std::thread;
 use std::time::{Duration, Instant};
@@ -59,6 +59,9 @@ impl From<MenuItem> for usize {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let db_path = Path::new(DB_PATH);
+    let db_dir = db_path.parent();
+    fs::create_dir_all(db_dir.unwrap())?;
     run_app()
 }
 
