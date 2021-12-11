@@ -3,8 +3,8 @@ use crossterm::{event::{self, Event as CEvent, KeyCode, KeyEvent}, terminal::{di
 use petname;
 use rand::{self, Rng};
 use serde::{Deserialize, Serialize};
-use std::{fs, io::Stdout};
-use std::io;
+use std::{fs, path::Path};
+use std::io::{self, Stdout};
 use std::sync::mpsc;
 use std::thread;
 use std::time::{Duration, Instant};
@@ -59,6 +59,9 @@ impl From<MenuItem> for usize {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let db_path = Path::new(DB_PATH);
+    let db_dir = db_path.parent();
+    fs::create_dir_all(db_dir.unwrap())?;
     run_app()
 }
 
@@ -110,7 +113,8 @@ fn rendering_loop(rx: mpsc::Receiver<Event<KeyEvent>>, mut terminal: Terminal<Cr
     // setup rendering loop
     let mut active_menu_item = MenuItem::Home;
     let mut pet_list_state = ListState::default();
-    pet_list_state.select(Some(0));
+    // pet_list_state.select(Some(0));
+    pet_list_state.select(None);
 
     loop {
         terminal.draw(|rect| {
@@ -124,17 +128,26 @@ fn rendering_loop(rx: mpsc::Receiver<Event<KeyEvent>>, mut terminal: Terminal<Cr
             rect.render_widget(tabs, chunks[0]);
 
             match active_menu_item {
-                MenuItem::Home => rect.render_widget(render_home(), chunks[1]),
+                MenuItem::Home => rect.render_widget(render_info_para("Home"), chunks[1]),
                 MenuItem::Pets => {
-                    let pets_chunks = Layout::default()
-                        .direction(Direction::Horizontal)
-                        .constraints(
-                            [Constraint::Percentage(20), Constraint::Percentage(80)].as_ref(),
-                        )
-                        .split(chunks[1]);
-                    let (left, right) = render_pets(&pet_list_state);
-                    rect.render_stateful_widget(left, pets_chunks[0], &mut pet_list_state);
-                    rect.render_widget(right, pets_chunks[1]);
+                    let pet_list = read_db().expect("can fetch pet list");
+                    if !pet_list.is_empty() {
+                        if pet_list_state.selected() == None {
+                            pet_list_state.select(Some(0));
+                        }
+                        let pets_chunks = Layout::default()
+                            .direction(Direction::Horizontal)
+                            .constraints(
+                                [Constraint::Percentage(20), Constraint::Percentage(80)].as_ref(),
+                            )
+                            .split(chunks[1]);
+
+                        let (left, right) = render_pets(&pet_list_state, &pet_list);
+                        rect.render_stateful_widget(left, pets_chunks[0], &mut pet_list_state);
+                        rect.render_widget(right, pets_chunks[1]);
+                    } else {
+                        rect.render_widget(render_info_para("Pets"), chunks[1])
+                    }
                 }
             }
         })?;
@@ -237,7 +250,7 @@ fn menu_tabs(active_menu_item: MenuItem) -> Tabs<'static> {
         .divider(Span::raw("|"))
 }
 
-fn render_home<'a>() -> Paragraph<'a> {
+fn render_info_para<'a>(title: &'a str) -> Paragraph<'a> {
     let home = Paragraph::new(vec![
         Spans::from(vec![Span::raw("")]),
         Spans::from(vec![Span::raw("Welcome")]),
@@ -256,7 +269,7 @@ fn render_home<'a>() -> Paragraph<'a> {
         Block::default()
             .borders(Borders::ALL)
             .style(Style::default().fg(Color::White))
-            .title("Home")
+            .title(title)
             .border_type(BorderType::Plain),
     );
     home
@@ -273,14 +286,13 @@ fn read_db() -> Result<Vec<Pet>, Error> {
     Ok(parsed)
 }
 
-fn render_pets<'a>(pet_list_state: &ListState) -> (List<'a>, Table<'a>) {
+fn render_pets<'a>(pet_list_state: &ListState, pet_list: &Vec<Pet>) -> (List<'a>, Table<'a>) {
     let pets = Block::default()
         .borders(Borders::ALL)
         .style(Style::default().fg(Color::White))
         .title("Pets")
         .border_type(BorderType::Plain);
 
-    let pet_list = read_db().expect("can fetch pet list");
     let items: Vec<_> = pet_list
         .iter()
         .map(|pet| {
