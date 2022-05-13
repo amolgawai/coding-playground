@@ -1,0 +1,40 @@
+#+TITLE: Modern C++ Practice
+#+AUTHOR: Amol Gawai
+#+STARTUP: Overview
+* Introduction
+This repository is for practicing and learning modern c++ (post c++11) and modern cmake (post 3.0)
+The repository is based on starter project [[https://github.com/TheLartians/ModernCppStarter][ModernCppStarter]] and the cmake is loosly based on [[https://cliutils.gitlab.io/modern-cmake/][Introduction to Modern CMake]]
+* Generic Guidelines
+** Repository Structure
+- As far as possible, all directories are self contained
+- Executables are in the "apps" directory, one directory per app
+- Libraries are in "libs" directory, one directory per library
+- Every app or library directory has one or all of directories viz. "include", "src", "tests"
+- Each namespace gets own directory inside the above three
+** Build System
+- CMake is primary build system(version 3.23), Bazel might be added later
+- Out of source build and dependency management
+- Every target (executable or library) CMakeLists.txt is self contained (i.e. does not depend directly on the external structure)
+- The main CMakeLists.txt makes all the dependencies available to the apps and libraries
+- [[https://github.com/cpm-cmake/CPM.cmake][CPM]] is used for external dependency download and setup
+* Building with CMake
+#+BEGIN_SRC shell
+  # configure build with ninja
+   cmake -S . -B build -GNinja
+  # build everything
+   cmake --build build
+  # build specific target
+   cmake --build build --target <name>
+#+END_SRC
+* ☛ TODO Practice Plan
+* References
+** CMake
+- [[https://cliutils.gitlab.io/modern-cmake/][An Introduction to modern CMake]]
+- [[https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/][Article - It's Time to do CMake right]]
+- [[https://www.youtube.com/watch?v=y7ndUhdQuU8][YouTube - More Modern CMake]]
+- [[https://www.youtube.com/watch?v=bsXLMQ6WgIk][YouTube - Daniel Pfifer - Effective CMake]]
+** CPP
+- [[https://ccc.codes][Book - C++ Crash Course]]
+- [[https://www.stroustrup.com/tour2.html][Book - A Tour of C++]]
+- [[https://changkun.de/modern-cpp/pdf/modern-cpp-tutorial-en-us.pdf][Modern C++ Tutorial]]
+- [[https://www.amazon.de/-/en/Peter-Gottschling/dp/0134383583][Book - Discovering Modern C++]]
