@@ -1,5 +1,7 @@
 # Pytest Examples and How-Tos
 
+run `python -m pytest` at the directory containing this README.
+
 ## Mocking specifics
 Mock where it is used, and not where it’s defined (source).
 
