@@ -1,2 +1,2 @@
-For personal coding practise of Python
+For personal coding practice of Python
 ---------------------------------

@@ -22,7 +22,7 @@ def get_progrssions():
 def test_abstract_exception():
     """Tests that the abstract class can't be instantiated """
 
-    msg = "Can't instantiate abstract class Progression with abstract methods _advance"
+    msg = "Can't instantiate abstract class Progression with abstract method _advance"
     with pytest.raises(TypeError, match=msg):
         Progression()
 
