@@ -1,0 +1,11 @@
+#+TITLE: Unit Test Frameworks
+#+STARTUP: overview
+#+AUTHOR: Amol Gawai
+* Introduction
+Unit testing in C++ can be achieved with the help of external frameworks as there is no in-built support. Following are the frameworks that I have chosen to learn
+1. [[https://www.boost.org/doc/libs/1_50_0/libs/test/doc/html/index.html][Boost Test Library]]
+2. [[https://github.com/google/googletest][GoogleTest]]
+3. [[https://github.com/doctest/doctest][DocTest]]
+*
+* Overview
+The project for implementing the unit tests using all frameworks is taken from [[https://www.boost.org/doc/libs/1_50_0/libs/test/doc/html/tutorials/new-year-resolution.html][Boost.Test Unit Test Tutorial]]

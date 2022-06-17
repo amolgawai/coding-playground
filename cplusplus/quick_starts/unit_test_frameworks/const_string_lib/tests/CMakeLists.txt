@@ -1,0 +1,4 @@
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
+add_subdirectory(boost_tests)
+add_subdirectory(doc_tests)
+add_subdirectory(google_tests)
