@@ -7,13 +7,13 @@ Tests are written using following frameworks
 2. gtest
 3. doctest
 * Commands
-```
+#+BEGIN_SRC bash
 # configure project
 cmake -S . -B build -GNinja -DCMAKE__CXX_COMPILER_LAUNCHER=ccache
 
 # build a specific target, e.g. boost tests
-cmake --build build --target const__string_boost_tests
+cmake --build build --target const_string_boost_tests
 
 # run tests
 build/tests/boost_tests/const_string_boost_tests
-```
+#+END_SRC
