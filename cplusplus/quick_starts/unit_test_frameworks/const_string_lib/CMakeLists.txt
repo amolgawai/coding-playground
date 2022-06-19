@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
 
 # Note: update this to your new project's name and version
 project(
-  const_string
+  const_string_lib
   VERSION 1.0
   DESCRIPTION "Constant String Library"
   LANGUAGES CXX
@@ -25,6 +25,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
   # Let's nicely support folders in IDEs
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+  # enable tests
+  include(CTest)
 
 endif()
 
@@ -53,12 +56,33 @@ target_include_directories(
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
   # ------ Testing Libraries --------
+
+  enable_testing()
+
+
+  set(Boost_USE_STATIC_LIBS ON)
+  set(Boost_USE_MULTITHREADED ON)
+  set(Boost_USE_STATIC_RUNTIME OFF)
   CPMAddPackage(
     NAME Boost
     VERSION 1.79.0
     GITHUB_REPOSITORY "boostorg/boost"
-    GIT_TAG "boost-1.77.0"
+    GIT_TAG "boost-1.79.0"
   )
+  if(Boost_ADDED)
+      message("boost asio downloaded at " ${Boost_SOURCE_DIR}/libs/asio/include)
+
+      file(GLOB files "${Boost_SOURCE_DIR}/libs/*/include")
+      foreach(filename ${files})
+          include_directories(${filename})
+      endforeach()
+
+      file(GLOB files "${Boost_SOURCE_DIR}/libs/*/*/include")
+      foreach(filename ${files})
+          include_directories(${filename})
+      endforeach()
+  endif()
+
   CPMAddPackage("gh:onqtam/doctest@2.4.8")
   CPMAddPackage(
     NAME googletest
@@ -67,5 +91,6 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     VERSION 1.11.0
     OPTIONS "INSTALL_GTEST OFF" "gtest_force_shared_crt"
 )
+
   add_subdirectory(tests)
 endif()

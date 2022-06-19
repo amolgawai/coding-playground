@@ -1,0 +1,19 @@
+#+TITLE: Tests for a const_string library
+#+STARTUP: Overview
+* Introduction
+A hypothetical library providing constant string, taken from the boost testing tutorial.
+Tests are written using following frameworks
+1. Boost.test
+2. gtest
+3. doctest
+* Commands
+```
+# configure project
+cmake -S . -B build -GNinja -DCMAKE__CXX_COMPILER_LAUNCHER=ccache
+
+# build a specific target, e.g. boost tests
+cmake --build build --target const__string_boost_tests
+
+# run tests
+build/tests/boost_tests/const_string_boost_tests
+```
