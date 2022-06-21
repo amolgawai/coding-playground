@@ -8,12 +8,15 @@ Tests are written using following frameworks
 3. doctest
 * Commands
 #+BEGIN_SRC bash
-# configure project
-cmake -S . -B build -GNinja -DCMAKE__CXX_COMPILER_LAUNCHER=ccache
+  # configure project
+  cmake -S . -B build -GNinja -DCMAKE__CXX_COMPILER_LAUNCHER=ccache
 
-# build a specific target, e.g. boost tests
-cmake --build build --target const_string_boost_tests
+  # build a specific target, e.g. boost tests
+  cmake --build build --target const_string_boost_tests
 
-# run tests
-build/tests/boost_tests/const_string_boost_tests
+  # run tests from a specific framework (run the test target)
+  build/tests/boost_tests/const_string_boost_tests
+
+  # run all tests using CTest
+  ctest --test-dir build -v
 #+END_SRC

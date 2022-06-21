@@ -26,8 +26,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   # Let's nicely support folders in IDEs
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-  # enable tests
+  # Enable Testing
   include(CTest)
+
 
 endif()
 
@@ -56,9 +57,6 @@ target_include_directories(
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
   # ------ Testing Libraries --------
-
-  enable_testing()
-
 
   set(Boost_USE_STATIC_LIBS ON)
   set(Boost_USE_MULTITHREADED ON)
