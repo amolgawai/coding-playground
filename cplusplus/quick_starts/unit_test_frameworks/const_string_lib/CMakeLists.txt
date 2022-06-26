@@ -82,6 +82,8 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
   endif()
 
   CPMAddPackage("gh:onqtam/doctest@2.4.8")
+  CPMAddPackage("gh:catchorg/Catch2@3.0.1")
+  list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
   CPMAddPackage(
     NAME googletest
     GITHUB_REPOSITORY google/googletest

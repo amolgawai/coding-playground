@@ -5,7 +5,8 @@ A hypothetical library providing constant string, taken from the boost testing t
 Tests are written using following frameworks
 1. Boost.test
 2. gtest
-3. doctest
+3. catch2
+4. doctest
 * Commands
 #+BEGIN_SRC bash
   # configure project
