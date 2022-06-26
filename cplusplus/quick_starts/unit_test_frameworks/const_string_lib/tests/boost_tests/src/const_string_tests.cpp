@@ -29,8 +29,8 @@ BOOST_AUTO_TEST_CASE(constructors_test) {
   const_string cs5{ s.data(), s.data() + s.length() };  // 7 //
   BOOST_CHECK_EQUAL(std::strncmp(cs5.data(), "test_string", cs5.length()), 0);
 
-  // const_string cs_array[] = {"str1", "str2"};  // 8 //
-  // BOOST_CHECK_EQUAL(cs_array[0], "str1");
-  // BOOST_CHECK_EQUAL(cs_array[1], "str2");
+  const_string cs_array[] = {"str1", "str2"};  // 8 //
+  BOOST_CHECK_EQUAL(cs_array[0].data(), "str1");
+  BOOST_CHECK_EQUAL(cs_array[1].data(), "str2");
 }
 // EOF
