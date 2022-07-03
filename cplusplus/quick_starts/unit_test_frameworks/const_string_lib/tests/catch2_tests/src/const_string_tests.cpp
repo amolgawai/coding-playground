@@ -2,7 +2,7 @@
 #include <catch2/matchers/catch_matchers_string.hpp>
 #include "const_string.h"
 
-TEST_CASE( "const_string_tests", "[constructors_test]") {
+TEST_CASE( "const_string_catch2_tests", "[constructors_test]") {
   const_string cs0{ "" };  // 1 //
   REQUIRE(cs0.length() == (size_t)0);
   REQUIRE(cs0.is_empty());

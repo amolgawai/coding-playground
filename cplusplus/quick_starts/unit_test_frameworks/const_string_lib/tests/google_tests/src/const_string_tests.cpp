@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "const_string.h"
 
-TEST(const_string_tests, constructors_test) {
+TEST(const_string_google_tests, constructors_test) {
   const_string cs0{ "" };  // 1 //
   EXPECT_EQ(cs0.length(), (size_t)0);
   EXPECT_TRUE(cs0.is_empty());
