@@ -91,6 +91,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     VERSION 1.11.0
     OPTIONS "INSTALL_GTEST OFF" "gtest_force_shared_crt"
 )
+CPMAddPackage("gh:boost-ext/ut@1.1.9")
 
   add_subdirectory(tests)
 endif()

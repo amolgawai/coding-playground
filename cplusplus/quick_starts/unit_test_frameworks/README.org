@@ -7,6 +7,6 @@ Unit testing in C++ can be achieved with the help of external frameworks as ther
 2. [[https://github.com/google/googletest][GoogleTest]]
 3. [[https://github.com/catchorg/Catch2][Catch2]]
 4. [[https://github.com/doctest/doctest][DocTest]]
-*
+5. [[https://boost-ext.github.io/ut/][Boost.UT]]
 * Overview
 The project for implementing the unit tests using all frameworks is taken from [[https://www.boost.org/doc/libs/1_50_0/libs/test/doc/html/tutorials/new-year-resolution.html][Boost.Test Unit Test Tutorial]]

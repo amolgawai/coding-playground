@@ -7,6 +7,13 @@ Tests are written using following frameworks
 2. gtest
 3. catch2
 4. doctest
+5. Boost.UT
+
+   #+BEGIN_QUOTE
+   The focus is of the project is on getting started on various unit testing framework and not on the library code.
+   #+END_QUOTE
+
+
 * Commands
 #+BEGIN_SRC bash
   # configure project
