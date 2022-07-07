@@ -1,0 +1,13 @@
+#+TITLE: Useful Libraries And Frameworks
+#+AUTHOR: Amol Gawai
+#+STARTUP: Overview
+* Introduction
+Sample code for popular useful libraries and frameworks. All configuration of the libraries is done in the main CMakeLists.txt and used in the sample application.
+* Libraries
+- [fmtlib/fmt: A modern formatting library](https://github.com/fmtlib/fmt)
+- [eliaskosunen/scnlib: scanf for modern C++](https://github.com/eliaskosunen/scnlib)
+- [jarro2783/cxxopts: Lightweight C++ command line option parser](https://github.com/jarro2783/cxxopts)
+- [gabime/spdlog: Fast C++ logging library.](https://github.com/gabime/spdlog)
+- [GitHub - nlohmann/json: JSON for Modern C++](https://github.com/nlohmann/json)
+- [USCiLab/cereal: A C++11 library for serialization](https://github.com/USCiLab/cereal)
+- [ericniebler/range-v3: Range library for C++14/17/20, basis for C++20's std::ranges](https://github.com/ericniebler/range-v3)

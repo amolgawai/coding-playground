@@ -1,0 +1,23 @@
+#+TITLE: Modern C++ Practice
+#+AUTHOR: Amol Gawai
+#+STARTUP: Overview
+* Introduction
+This repository is for practicing and learning modern c++ (post c++11) and modern cmake (post 3.0)
+The repository is based on [[https://github.com/amolgawai/modern-cpp-cmake-starter][my modern-cpp-cmake-starter]].
+* * Building with CMake
+#+BEGIN_SRC shell
+  # configure build with ninja
+   cmake -S . -B build -GNinja
+  # build everything
+   cmake --build build
+  # build specific target
+   cmake --build build --target <name>
+  # configure with code quality tools namely sanitizers, cppcheck, include what you use (iwyu), codecoverage
+   cmake -S . -B build -GNinja -DUSE_SANITIZER='Memory;MemoryWithOrigins;Thread;Leak;Address;Undefined' -DUSE_STATIC_ANALYZER='clang-tidy;iwyu;cppcheck' -DENABLE_CODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Coverage
+#+END_SRC
+* ☛ TODO Practice Plan
+* References
+- [[https://ccc.codes][Book - C++ Crash Course]]
+- [[https://www.stroustrup.com/tour2.html][Book - A Tour of C++]]
+- [[https://changkun.de/modern-cpp/pdf/modern-cpp-tutorial-en-us.pdf][Modern C++ Tutorial]]
+- [[https://www.amazon.de/-/en/Peter-Gottschling/dp/0134383583][Book - Discovering Modern C++]]
