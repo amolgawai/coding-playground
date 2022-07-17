@@ -2,6 +2,8 @@
 #include <cxxopts.hpp>
 #include <iostream>
 
+#include "run_examples.hpp"
+
 auto main(int argc, char** argv) -> int {
 
     cxxopts::Options options(*argv, "A program to welcome the world!");
@@ -26,6 +28,8 @@ auto main(int argc, char** argv) -> int {
     }
 
     std::cout << "Hello popular c++ libs and framework" << std::endl;
+
+    run_user_input_examples();
 
     return 0;
 }

@@ -104,4 +104,4 @@ target_set_warnings(
     Annoying
 ) # Set warnings (if needed).
 
-target_link_libraries(SampleApp cxxopts)
+target_link_libraries(SampleApp cxxopts::cxxopts  scn::scn)
