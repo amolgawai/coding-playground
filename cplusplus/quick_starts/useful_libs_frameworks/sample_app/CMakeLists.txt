@@ -78,13 +78,13 @@ CPMAddPackage(
 )
 
 CPMAddPackage("gh:gabime/spdlog@1.10.0")
-CPMAddPackage(
-  NAME cereal
-  VERSION 1.3.2
-  GITHUB_REPOSITORY USCiLab/cereal
-  OPTIONS "SKIP_PORTABILITY_TEST ON" "JUST_INSTALL_CEREAL ON"
-)
-CPMAddPackage("gh:nlohmann/json@3.10.5")
+# CPMAddPackage(
+#   NAME cereal
+#   VERSION 1.3.2
+#   GITHUB_REPOSITORY USCiLab/cereal
+#   OPTIONS "SKIP_PORTABILITY_TEST ON" "JUST_INSTALL_CEREAL ON"
+# )
+# CPMAddPackage("gh:nlohmann/json@3.10.5")
 CPMAddPackage("gh:ericniebler/range-v3#0.12.0")
 CPMAddPackage("gh:eliaskosunen/scnlib@1.1.2")
 
@@ -104,4 +104,4 @@ target_set_warnings(
     Annoying
 ) # Set warnings (if needed).
 
-target_link_libraries(SampleApp cxxopts::cxxopts  scn::scn)
+target_link_libraries(SampleApp cxxopts::cxxopts  scn::scn fmt::fmt)

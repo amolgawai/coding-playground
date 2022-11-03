@@ -11,3 +11,17 @@ Sample code for popular useful libraries and frameworks. All configuration of th
 - [GitHub - nlohmann/json: JSON for Modern C++](https://github.com/nlohmann/json)
 - [USCiLab/cereal: A C++11 library for serialization](https://github.com/USCiLab/cereal)
 - [ericniebler/range-v3: Range library for C++14/17/20, basis for C++20's std::ranges](https://github.com/ericniebler/range-v3)
+* Building and Running
+To configure the build run following at `sample_app` directory
+#+BEGIN_SRC bash
+cmake -S . -B build -GNinja
+#+END_SRC
+This will create build files in the build directory
+Build the application by typing following
+#+BEGIN_SRC bash
+cmake --build build
+#+END_SRC
+Run the application
+#+BEGIN_SRC bash
+build/SampleApp --help
+#+END_SRC
