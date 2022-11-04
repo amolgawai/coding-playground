@@ -1,33 +1,17 @@
 
-#include <cxxopts.hpp>
-#include <iostream>
-
+#include "cli_options.hpp"
+#include "cli_io.hpp"
 #include "run_examples.hpp"
 
 auto main(int argc, char** argv) -> int {
 
-    cxxopts::Options options(*argv, "A program to welcome the world!");
+    CLIOptions options{"A program to demonstrate useful c++ libraries and frameworks!"};
 
-    // clang-format off
-  options.add_options()
-    ("h,help", "Show help")
-    ("v,version", "Print the current version number")
-  ;
-    // clang-format on
-
-    auto result = options.parse(argc, argv);
-
-    if (result["help"].as<bool>()) {
-        std::cout << options.help() << std::endl;
+    if (!options.scan_options(argc, argv)) {
         return 0;
     }
 
-    if (result["version"].as<bool>()) {
-        std::cout << "1.0.0" << std::endl;
-        return 0;
-    }
-
-    std::cout << "Hello popular c++ libs and framework" << std::endl;
+    cli_io::show_msg_title("Hello popular c++ libs and framework");
 
     run_user_input_examples();
 
