@@ -159,7 +159,8 @@ $ poetry add --dev black flake8 pylint python-language-server importmagic epc ip
 ### Setup project
 #### Manual
 Start with initializing git repo and poetry.
-Create following folder structure or use the Sample Project git repo as a template ((Sample Project)[https://github.com/pypa/sampleproject])
+Create following folder structure or use the Sample Project git repo as a template ([Sample Project](https://github.com/pypa/sampleproject))
+
 ```
 project-repo/
 ├── LICENSE
@@ -173,7 +174,7 @@ project-repo/
 └── tests/
 ```
 
-#### Using (hypermodern python cookiecutter)[https://github.com/cjolowicz/cookiecutter-hypermodern-python]
+#### Using [hypermodern python cookiecutter](https://github.com/cjolowicz/cookiecutter-hypermodern-python)
 `$ cookiecutter gh:cjolowicz/cookiecutter-hypermodern-python --checkout=2022.6.3`
 
 ### Dev Toolchain
