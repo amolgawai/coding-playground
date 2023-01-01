@@ -70,6 +70,8 @@
 - [Mastering Rust - My YouTube Playlist](https://www.youtube.com/playlist?list=PLkWkmjPxsY0lcrGlJlmFXuZWe3zUddJMo)
 - [Build a TUI app](https://blog.logrocket.com/rust-and-tui-building-a-command-line-interface-in-rust/)
 - [Rust cli example: Ferris fetches Go gopher postcards - DEV Community](https://dev.to/uggla/rust-cli-example-ferris-fetches-go-gopher-postcards-3gb5)
+- [Build Real Time Chat App with Rust and React](https://blog.logrocket.com/real-time-chat-app-rust-react/)
+- [Video Codec in hundred lines](https://blog.tempus-ex.com/hello-video-codec/)
 
 ## Resources
 * [Rust Learning Centre](https://www.rust-lang.org/learn)
@@ -79,3 +81,4 @@
 * [Understanding Rust Futures](https://fasterthanli.me/articles/understanding-rust-futures-by-going-way-too-deep)
 * [intro to parsing with nom](https://stevedonovan.github.io/rust-gentle-intro/nom-intro.html)
 * [Rust Language Cheat Sheet](https://cheats.rs/)
+* [Google Rust Workshop](https://google.github.io/comprehensive-rust/)

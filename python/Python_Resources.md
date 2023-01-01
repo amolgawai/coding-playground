@@ -14,6 +14,12 @@
 - [Hypothesis - library for creating unit tests](https://hypothesis.readthedocs.io/en/latest/)
 - [pytest-cases](https://github.com/smarie/python-pytest-cases)
 - [Fast and reliable end-to-end testing for modern web apps | Playwright Python](https://playwright.dev/python/)
+- [freezgun - mock datetime](https://github.com/spulec/freezegun)
+- [Mimesis: The Fake Data Generator](https://github.com/lk-geimfari/mimesis)
+
+## Compilers
+- [Codon - High Performance Python Compiler](https://github.com/exaloop/codon)
+- [numba - NumPy-aware optimizing compiler for Python](https://github.com/numba/numba)
 
 ## Interesting libraries
 - [termcolors](https://pypi.org/project/termcolor/)
@@ -58,6 +64,7 @@
 - [Foundations of Applied Mathematics](https://foundations-of-applied-mathematics.github.io)
 - [Automate Boring Stuff with Python](https://automatetheboringstuff.com)
 - [Hackers and Slackers - Series](https://hackersandslackers.com/series/)
+- [returns - Make your functions return something meaningful, typed, and safe!](https://github.com/dry-python/returns)
 
 ## Projects
 - [Build a Contact Book With Python, PyQt, and SQLite – Real Python](https://realpython.com/python-contact-book/)
