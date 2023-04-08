@@ -1,4 +1,4 @@
-# Master Python 
+# Master Python
 
 ## Development tools
 - [Best of python dev list](https://github.com/ml-tooling/best-of-python-dev)
@@ -10,7 +10,7 @@
 - [pdoc – Auto-generate API documentation for Python projects](https://pdoc3.github.io/pdoc/)
 - [Pyreverse - Pylint 2.15.0-dev0 documentation](https://pylint.pycqa.org/en/latest/pyreverse.html)
 
-### Testing 
+### Testing
 - [Hypothesis - library for creating unit tests](https://hypothesis.readthedocs.io/en/latest/)
 - [pytest-cases](https://github.com/smarie/python-pytest-cases)
 - [Fast and reliable end-to-end testing for modern web apps | Playwright Python](https://playwright.dev/python/)
@@ -77,3 +77,4 @@
 - [Web Scraping with Python: from Fundamentals to Practice | Scrape-It.Cloud](https://scrape-it.cloud/blog/web-scraping-with-python)
 - [Web Scraping with Python: from Fundamentals to Practice | Scrape-It.Cloud](https://scrape-it.cloud/blog/web-scraping-with-python)
 - [Automate Your Life with Python](https://www.freecodecamp.org/news/automate-your-life-with-python/ )
+- [Python Maze Solver](https://realpython.com/python-maze-solver/)
