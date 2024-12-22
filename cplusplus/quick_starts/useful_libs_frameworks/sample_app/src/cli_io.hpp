@@ -24,7 +24,7 @@ void show_msg_error(const std::string &msg);
 template <typename... T>
 void show_msg_info(fmt::format_string<T...> format, T &&...args) {
   fmt::print(format, args...);
-}
+};
 
 // Get input from user
 template <typename NUM_TYP>
@@ -37,7 +37,7 @@ std::vector<NUM_TYP> get_numbers(const std::string &msg) {
         show_msg_error("Error occured during reading");
     }
     return input_nums;
-}
+};
 
 } // namespace cli_io
 
