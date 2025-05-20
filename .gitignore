@@ -3,3 +3,6 @@ rust/kvstore/src/kv.db
 rust/kvstore/kv.db
 rust/lang_concepts/.vscode
 rust/lang_concepts/src/main
+**/*.hi
+**/*.exe
+haskell/standalones/ArgParser
